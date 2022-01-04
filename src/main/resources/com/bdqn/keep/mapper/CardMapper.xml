@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdqn.keep.mapper.CardMapper">
+    <resultMap id="ss" type="GymCard">
+        <id property="id" column="id"></id>
+        <result column="user_name" property="username"></result>
+        <result column="card_type_id" property="cardtypeid"></result>
+        <result column="status" property="status"></result>
+        <result column="phone" property="phone"></result>
+        <result column="balance" property="balance"></result>
+        <result column="open_date" property="openDate"></result>
+        <association property="type" javaType="CardType">
+            <id property="id" column="id"/>
+            <result column="id" property="id"/>
+            <result column="name" property="name"/>
+        </association>
+    </resultMap>
+    <select id="getall" resultMap="ss">
+        SELECT g.id,g.user_name,g.phone,c.name,g.status,g.balance,g.open_date FROM card_type c,gym_card g
+        <where>
+        <if test="ids!=0">
+             c.id=#{ids}
+        </if>
+            and g.card_type_id=c.id
+        </where>
+    </select>
+
+
+</mapper>
